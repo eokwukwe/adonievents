@@ -1,8 +1,12 @@
 <template>
   <div class="min-h-full">
-    <Disclosure as="nav" class="bg-gray-800 transition-all" v-slot="{ open }">
+    <Disclosure
+      as="nav"
+      class="bg-gray-800 transition-all fixed w-full left-0 top-0 z-20"
+      v-slot="{ open }"
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
+        <div class="flex items-center justify-between h-12 py-1">
           <div class="flex items-center">
             <div class="flex-shrink-0">
               <img
@@ -11,6 +15,8 @@
                 alt="Workflow"
               />
             </div>
+          </div>
+          <div class="hidden md:flex">
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">
                 <a
@@ -21,35 +27,15 @@
                     item.current
                       ? 'bg-gray-900 text-white'
                       : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'px-3 py-2 rounded-md text-sm font-medium',
+                    'px-3 py-2 rounded-sm text-xs font-medium',
                   ]"
                   :aria-current="item.current ? 'page' : undefined"
                   >{{ item.name }}</a
                 >
               </div>
             </div>
-          </div>
-          <div class="hidden md:block">
-            <div class="ml-4 flex items-center md:ml-6">
-              <button
-                type="button"
-                class="
-                  bg-gray-800
-                  p-1
-                  rounded-full
-                  text-gray-400
-                  hover:text-white
-                  focus:outline-none
-                  focus:ring-2
-                  focus:ring-offset-2
-                  focus:ring-offset-gray-800
-                  focus:ring-white
-                "
-              >
-                <span class="sr-only">View notifications</span>
-                <BellIcon class="h-6 w-6" aria-hidden="true" />
-              </button>
 
+            <div class="ml-4 flex items-center md:ml-6">
               <!-- Profile dropdown -->
               <Menu as="div" class="ml-3 relative">
                 <div>
@@ -62,18 +48,14 @@
                       items-center
                       text-sm
                       focus:outline-none
-                      focus:ring-2
+                      focus:ring-1
                       focus:ring-offset-2
                       focus:ring-offset-gray-800
                       focus:ring-white
                     "
                   >
                     <span class="sr-only">Open user menu</span>
-                    <span class="text-gray-200 font-semibold capitalize mr-2">
-                      {{ $page.props.auth?.user.first_name }}
-                    </span>
-
-                    <img class="h-8 w-8 rounded-full" :src="user.imageUrl" alt="" />
+                    <img class="h-8 w-8 rounded-full" :src="defaultImg" alt="" />
                   </MenuButton>
                 </div>
                 <transition
@@ -139,12 +121,12 @@
                 inline-flex
                 items-center
                 justify-center
-                p-2
+                p-1
                 rounded-md
                 text-gray-400
                 hover:text-white hover:bg-gray-700
                 focus:outline-none
-                focus:ring-2
+                focus:ring-1
                 focus:ring-offset-2
                 focus:ring-offset-gray-800
                 focus:ring-white
@@ -178,7 +160,7 @@
         <div class="pt-4 pb-3 border-t border-gray-700">
           <div class="flex items-center px-5">
             <div class="flex-shrink-0">
-              <img class="h-10 w-10 rounded-full" :src="user.imageUrl" alt="" />
+              <img class="h-10 w-10 rounded-full" :src="defaultImg" alt="" />
             </div>
             <div class="ml-3">
               <div class="text-base font-medium leading-none text-white">
@@ -189,26 +171,6 @@
                 {{ $page.props.auth?.user.email }}
               </div>
             </div>
-            <button
-              type="button"
-              class="
-                ml-auto
-                bg-gray-800
-                flex-shrink-0
-                p-1
-                rounded-full
-                text-gray-400
-                hover:text-white
-                focus:outline-none
-                focus:ring-2
-                focus:ring-offset-2
-                focus:ring-offset-gray-800
-                focus:ring-white
-              "
-            >
-              <span class="sr-only">View notifications</span>
-              <BellIcon class="h-6 w-6" aria-hidden="true" />
-            </button>
           </div>
           <div class="mt-3 px-2 space-y-1">
             <DisclosureButton
@@ -233,18 +195,8 @@
       </DisclosurePanel>
     </Disclosure>
 
-    <!-- <header class="bg-white shadow">
-      <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold text-gray-900">Dashboard</h1>
-      </div>
-    </header> -->
     <main>
-      <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <!-- Replace with your content -->
-        <!-- <div class="px-4 py-6 sm:px-0">
-          <div class="border-4 border-dashed border-gray-200 rounded-lg h-96" />
-        </div> -->
-        <!-- /End replace -->
+      <div class="max-w-7xl mx-auto px-3 pb-6 pt-16 sm:px-6 lg:px-8">
         <flash-messages />
         <slot />
       </div>
@@ -264,6 +216,7 @@ import {
 } from '@headlessui/vue'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
 import FlashMessages from '../Common/FlashMessages.vue'
+import { usePage } from '@inertiajs/inertia-vue3'
 
 const user = {
   name: 'Tom Cook',
@@ -298,8 +251,13 @@ export default {
     FlashMessages,
   },
   setup() {
+    const user = usePage().props.value.auth.user
+
+    const defaultImg = `https://ui-avatars.com/api/?name=${user.first_name}+${user.last_name}`
+
     return {
       user,
+      defaultImg,
       navigation,
       userNavigation,
     }
