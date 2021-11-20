@@ -2,7 +2,7 @@
   <div class="min-h-full">
     <Disclosure
       as="nav"
-      class="bg-gray-800 transition-all fixed w-full left-0 top-0 z-20"
+      class="bg-indigo-800 transition-all fixed w-full left-0 top-0 z-20"
       v-slot="{ open }"
     >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -25,8 +25,8 @@
                   :href="item.href"
                   :class="[
                     item.current
-                      ? 'bg-gray-900 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                      ? 'bg-indigo-900 text-white'
+                      : 'text-gray-300 hover:bg-indigo-700 hover:text-white',
                     'px-3 py-2 rounded-sm text-xs font-medium',
                   ]"
                   :aria-current="item.current ? 'page' : undefined"
@@ -55,7 +55,11 @@
                     "
                   >
                     <span class="sr-only">Open user menu</span>
-                    <img class="h-8 w-8 rounded-full" :src="defaultImg" alt="" />
+                    <img
+                      class="h-8 w-8 rounded-full"
+                      :src="profileImg"
+                      alt="profile header image"
+                    />
                   </MenuButton>
                 </div>
                 <transition
@@ -81,7 +85,7 @@
                       focus:outline-none
                     "
                   >
-                    <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
+                    <!-- <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
                       <a
                         :href="item.href"
                         :class="[
@@ -90,6 +94,22 @@
                         ]"
                         >{{ item.name }}</a
                       >
+                    </MenuItem> -->
+                    <MenuItem>
+                      <Link
+                        as="button"
+                        href="/users"
+                        class="
+                          w-full
+                          block
+                          px-4
+                          py-2
+                          text-sm text-left text-gray-700
+                          hover:bg-gray-200
+                        "
+                      >
+                        Your Profile
+                      </Link>
                     </MenuItem>
                     <MenuItem>
                       <Link
@@ -160,15 +180,15 @@
         <div class="pt-4 pb-3 border-t border-gray-700">
           <div class="flex items-center px-5">
             <div class="flex-shrink-0">
-              <img class="h-10 w-10 rounded-full" :src="defaultImg" alt="" />
+              <img class="h-10 w-10 rounded-full" :src="profileImg" alt="" />
             </div>
             <div class="ml-3">
               <div class="text-base font-medium leading-none text-white">
-                {{ $page.props.auth?.user.first_name }}
-                {{ $page.props.auth?.user.last_name }}
+                {{ user.first_name }}
+                {{ user.last_name }}
               </div>
               <div class="text-sm font-medium leading-none text-gray-400 mt-1">
-                {{ $page.props.auth?.user.email }}
+                {{ user.email }}
               </div>
             </div>
           </div>
@@ -188,8 +208,9 @@
                 text-gray-400
                 hover:text-white hover:bg-gray-700
               "
-              >{{ item.name }}</DisclosureButton
             >
+              {{ item.name }}
+            </DisclosureButton>
           </div>
         </div>
       </DisclosurePanel>
@@ -218,12 +239,6 @@ import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
 import FlashMessages from '../Common/FlashMessages.vue'
 import { usePage } from '@inertiajs/inertia-vue3'
 
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-}
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
   { name: 'Team', href: '#', current: false },
@@ -231,10 +246,7 @@ const navigation = [
   { name: 'Calendar', href: '#', current: false },
   { name: 'Reports', href: '#', current: false },
 ]
-const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-]
+const userNavigation = [{ name: 'Your Profile', href: '/users' }]
 
 export default {
   components: {
@@ -253,11 +265,11 @@ export default {
   setup() {
     const user = usePage().props.value.auth.user
 
-    const defaultImg = `https://ui-avatars.com/api/?name=${user.first_name}+${user.last_name}`
+    const profileImg = user.profile_img ?? user.avatar
 
     return {
       user,
-      defaultImg,
+      profileImg,
       navigation,
       userNavigation,
     }

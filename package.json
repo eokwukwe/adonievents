@@ -46,6 +46,7 @@
     "@inertiajs/inertia": "^0.10.1",
     "@inertiajs/inertia-vue3": "^0.5.2",
     "@inertiajs/progress": "^0.2.6",
+    "cloudinary": "^1.27.1",
     "luxon": "^2.1.1",
     "phc-argon2": "^1.1.2",
     "proxy-addr": "^2.0.7",

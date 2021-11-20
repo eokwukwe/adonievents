@@ -1,12 +1,14 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import User from 'App/Models/User'
+import CloudinaryServices from 'App/Services/CloudinaryServices'
 import CreateUserValidator from 'App/Validators/CreateUserValidator'
 
 export default class Register {
   public async index({}: HttpContextContract) {}
 
   public async create({ inertia }: HttpContextContract) {
+    await CloudinaryServices.cloudinary().uploader.upload('https://picsum.photos/id/237/200/300')
     return inertia.render('Auth/Register')
   }
 

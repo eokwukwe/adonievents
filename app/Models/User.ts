@@ -3,7 +3,7 @@ import Env from '@ioc:Adonis/Core/Env'
 import Hash from '@ioc:Adonis/Core/Hash'
 import Mail from '@ioc:Adonis/Addons/Mail'
 import Route from '@ioc:Adonis/Core/Route'
-import { BaseModel, beforeSave, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeSave, column, computed } from '@ioc:Adonis/Lucid/Orm'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -20,6 +20,15 @@ export default class User extends BaseModel {
 
   @column({ serializeAs: null })
   public password: string
+
+  @column()
+  public phone: string
+
+  @column()
+  public bio: string
+
+  @column()
+  public profileImg: string
 
   @column({ serializeAs: null })
   public rememberMeToken?: string
@@ -41,6 +50,11 @@ export default class User extends BaseModel {
     if (user.$dirty.password) {
       user.password = await Hash.make(user.password)
     }
+  }
+
+  @computed()
+  public get avatar() {
+    return `https://ui-avatars.com/api/?name=${this.firstName}+${this.lastName}&background=eee`
   }
 
   public async sendVerificationEmail() {

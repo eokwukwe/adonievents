@@ -28,4 +28,13 @@ export default Env.rules({
   SMTP_PORT: Env.schema.number(),
   SMTP_USERNAME: Env.schema.string(),
   SMTP_PASSWORD: Env.schema.string(),
+
+  CLOUDINARY_CLOUD_NAME: Env.schema.string(),
+  CLOUDINARY_API_KEY: Env.schema.string(),
+  CLOUDINARY_API_SECRET: Env.schema.string(),
+  CLOUDINARY_SECURE: Env.schema.boolean(),
+  // CLOUDINARY_PRIVATE_CDN: Env.schema.boolean(),
+  // CLOUDINARY_SECURE_DISTRIBUTION: Env.schema.string(),
+  // CLOUDINARY_FORCE_VERSION: Env.schema.boolean(),
+  // CLOUDINARY_SSL_DETECTED: Env.schema.boolean(),
 })

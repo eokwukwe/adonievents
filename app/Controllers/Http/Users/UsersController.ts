@@ -2,7 +2,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class UsersController {
   public async index({ inertia }: HttpContextContract) {
-    return inertia.render('Users/Dashboard')
+    return inertia.render('Users/Index')
   }
 
   public async create({}: HttpContextContract) {}

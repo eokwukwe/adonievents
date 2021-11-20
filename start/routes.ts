@@ -19,8 +19,12 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import CloudinaryServices from 'App/Services/CloudinaryServices'
+// import cloudinary from '@ioc:Cloudinary'
 
 Route.get('/', async ({ inertia }) => {
+  // await cloudinary.v2.uploader.upload('https://picsum.photos/id/237/200/300')
+  await CloudinaryServices.cloudinary().uploader.upload('https://picsum.photos/id/237/200/300')
   return inertia.render('Welcome')
 })
   .as('welcome')
@@ -28,7 +32,7 @@ Route.get('/', async ({ inertia }) => {
 
 Route.group(() => {
   Route.get('users', 'UsersController.index')
-    .as('user.dashboard')
+    .as('user.index')
     .namespace('App/Controllers/Http/Users')
 
   Route.post('logout', 'LoginController.destroy').namespace('App/Controllers/Http/Auth')
