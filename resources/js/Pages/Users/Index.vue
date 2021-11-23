@@ -105,16 +105,28 @@
         </p>
       </div>
     </div>
+
+    <accordion-component>
+      <template #title>This is ttitle</template>
+
+      <p>Lorem ipsum dolor sit amet consectetur. Incidunt, ad voluptas!</p>
+    </accordion-component>
   </div>
 </template>
 
 <script>
 import { usePage } from '@inertiajs/inertia-vue3'
 import AuthenticatedLayout from '../../Components/Layouts/Authenticated.vue'
+import AccordionComponent from '../../Components/Common/Accordion'
 
 export default {
   name: 'UserDashboard',
   layout: AuthenticatedLayout,
+
+  components: {
+    AccordionComponent,
+  },
+
   setup() {
     const user = usePage().props.value.auth.user
 
