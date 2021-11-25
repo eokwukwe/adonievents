@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <div class="p-8 pb-2 bg-white shadow mt-20">
+    <div class="py-8 pb-2 bg-white shadow mt-20 border-b-2">
       <div class="grid grid-cols-1 md:grid-cols-3">
         <!-- Profile Stats -->
         <div class="grid grid-cols-3 text-center order-last md:order-first mt-6 md:mt-0">
@@ -90,54 +90,173 @@
         </div> -->
       </div>
 
-      <div class="mt-2 md:mt-20 text-center pb-4">
+      <div class="mt-2 md:mt-20 text-center pb-2">
         <h1 class="text-3xl font-medium text-gray-700 capitalize">
           {{ user.first_name }} {{ user.last_name }}
         </h1>
-        <p class="font-light text-gray-600 mt-3">090912344566 - {{ user.email }}</p>
-
-        <hr class="my-4" />
-
-        <p class="font-light text-gray-500">
-          An artist of considerable range, Ryan the name taken by Melbourne-raised, Brooklyn-based
-          Nick Murphy writes, performs and records all of his own music, giving it a warm, intimate
-          feel with a solid groove structure. An artist of considerable range.
-        </p>
+        <p class="font-light text-gray-600">090912344566 - {{ user.email }}</p>
       </div>
     </div>
 
     <accordion-component>
-      <template #title>This is ttitle</template>
+      <template #title>Bio</template>
 
-      <p>Lorem ipsum dolor sit amet consectetur. Incidunt, ad voluptas!</p>
+      <p class="font-light text-gray-500">
+        An artist of considerable range, Ryan the name taken by Melbourne-raised, Brooklyn-based
+        Nick Murphy writes, performs and records all of his own music, giving it a warm, intimate
+        feel with a solid groove structure. An artist of considerable range.
+      </p>
     </accordion-component>
+
+    <TabGroup>
+      <TabList class="w-full mt-5 shadow flex space-x-1 bg-white border-b-2">
+        <Tab
+          v-for="category in Object.keys(categories)"
+          as="template"
+          :key="category"
+          v-slot="{ selected }"
+        >
+          <button
+            :class="[
+              'w-full py-2.5 text-sm leading-5 font-medium',
+              'focus:outline-none',
+              selected
+                ? 'bg-indigo-800 text-white'
+                : 'text-gray-700 hover:bg-indigo-200 hover:text-white',
+            ]"
+          >
+            {{ category }}
+          </button>
+        </Tab>
+      </TabList>
+
+      <TabPanels class="shadow">
+        <TabPanel
+          v-for="(posts, idx) in Object.values(categories)"
+          :key="idx"
+          :class="[
+            'bg-white py-3',
+            'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60',
+          ]"
+        >
+          <ul>
+            <li
+              v-for="post in posts"
+              :key="post.id"
+              class="relative p-3 rounded-md hover:bg-coolGray-100"
+            >
+              <h3 class="text-sm font-medium leading-5">
+                {{ post.title }}
+              </h3>
+
+              <ul class="flex mt-1 space-x-1 text-xs font-normal leading-4 text-coolGray-500">
+                <li>{{ post.date }}</li>
+                <li>&middot;</li>
+                <li>{{ post.commentCount }} comments</li>
+                <li>&middot;</li>
+                <li>{{ post.shareCount }} shares</li>
+              </ul>
+
+              <a
+                href="#"
+                :class="[
+                  'absolute inset-0 rounded-md',
+                  'focus:z-10 focus:outline-none focus:ring-2 ring-blue-400',
+                ]"
+              />
+            </li>
+          </ul>
+        </TabPanel>
+      </TabPanels>
+    </TabGroup>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { ref, defineComponent } from 'vue'
 import { usePage } from '@inertiajs/inertia-vue3'
 import AuthenticatedLayout from '../../Components/Layouts/Authenticated.vue'
-import AccordionComponent from '../../Components/Common/Accordion'
+import AccordionComponent from '../../Components/Common/Accordion.vue'
 
-export default {
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
+import { IAuthUser } from '../../@types/user'
+
+export default defineComponent({
   name: 'UserDashboard',
   layout: AuthenticatedLayout,
 
   components: {
     AccordionComponent,
+    TabGroup,
+    TabList,
+    Tab,
+    TabPanels,
+    TabPanel,
   },
 
   setup() {
-    const user = usePage().props.value.auth.user
+    const user = usePage<IAuthUser>().props.value.auth.user
 
     const profileImg = user.profile_img ?? user.avatar
+
+    let categories = ref({
+      'Update Profile': [
+        {
+          id: 1,
+          title: 'Does drinking coffee make you smarter?',
+          date: '5h ago',
+          commentCount: 5,
+          shareCount: 2,
+        },
+        {
+          id: 2,
+          title: "So you've bought coffee... now what?",
+          date: '2h ago',
+          commentCount: 3,
+          shareCount: 2,
+        },
+      ],
+      'Total Events': [
+        {
+          id: 1,
+          title: 'Is tech making coffee better or worse?',
+          date: 'Jan 7',
+          commentCount: 29,
+          shareCount: 16,
+        },
+        {
+          id: 2,
+          title: 'The most innovative things happening in coffee',
+          date: 'Mar 19',
+          commentCount: 24,
+          shareCount: 12,
+        },
+      ],
+      Followers: [
+        {
+          id: 1,
+          title: 'Ask Me Anything: 10 answers to your questions about coffee',
+          date: '2d ago',
+          commentCount: 9,
+          shareCount: 5,
+        },
+        {
+          id: 2,
+          title: "The worst advice we've ever heard about coffee",
+          date: '4d ago',
+          commentCount: 1,
+          shareCount: 2,
+        },
+      ],
+    })
 
     return {
       user,
       profileImg,
+      categories,
     }
   },
-}
+})
 </script>
 
 <style></style>

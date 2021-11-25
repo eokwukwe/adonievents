@@ -1,5 +1,5 @@
 <template>
-  <details class="bg-white shadow mt-3">
+  <details class="bg-white shadow">
     <summary>
       <slot name="title">Details</slot>
     </summary>
@@ -8,8 +8,10 @@
   </details>
 </template>
 
-<script>
-export default {}
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({})
 </script>
 
 <style></style>

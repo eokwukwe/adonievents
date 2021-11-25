@@ -19,24 +19,23 @@
           <div class="hidden md:flex">
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">
-                <a
-                  v-for="item in navigation"
-                  :key="item.name"
-                  :href="item.href"
+                <Link
+                  href="#"
                   :class="[
-                    item.current
-                      ? 'bg-indigo-900 text-white'
+                    current
+                      ? 'bg-indigo-600 text-white'
                       : 'text-gray-300 hover:bg-indigo-700 hover:text-white',
-                    'px-3 py-2 rounded-sm text-xs font-medium',
+                    'px-5 py-2 rounded-sm text-xs font-medium',
                   ]"
-                  :aria-current="item.current ? 'page' : undefined"
-                  >{{ item.name }}</a
+                  :aria-current="current ? 'page' : undefined"
                 >
+                  Events
+                </Link>
               </div>
             </div>
 
+            <!-- Profile dropdown -->
             <div class="ml-4 flex items-center md:ml-6">
-              <!-- Profile dropdown -->
               <Menu as="div" class="ml-3 relative">
                 <div>
                   <MenuButton
@@ -85,16 +84,6 @@
                       focus:outline-none
                     "
                   >
-                    <!-- <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
-                      <a
-                        :href="item.href"
-                        :class="[
-                          active ? 'bg-gray-100' : '',
-                          'block px-4 py-2 text-sm text-gray-700',
-                        ]"
-                        >{{ item.name }}</a
-                      >
-                    </MenuItem> -->
                     <MenuItem>
                       <Link
                         as="button"
@@ -137,7 +126,7 @@
             <!-- Mobile menu button -->
             <DisclosureButton
               class="
-                bg-gray-800
+                bg-indigo-900
                 inline-flex
                 items-center
                 justify-center
@@ -162,20 +151,18 @@
 
       <DisclosurePanel class="md:hidden">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          <DisclosureButton
-            v-for="item in navigation"
-            :key="item.name"
-            as="a"
-            :href="item.href"
+          <Link
+            href="#"
             :class="[
-              item.current
-                ? 'bg-gray-900 text-white'
-                : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+              current
+                ? 'bg-indigo-700 text-white'
+                : 'text-indigo-300 hover:bg-indigo-700 hover:text-white',
               'block px-3 py-2 rounded-md text-base font-medium',
             ]"
-            :aria-current="item.current ? 'page' : undefined"
-            >{{ item.name }}</DisclosureButton
+            :aria-current="current ? 'page' : undefined"
           >
+            <DisclosureButton> Events </DisclosureButton>
+          </Link>
         </div>
         <div class="pt-4 pb-3 border-t border-gray-700">
           <div class="flex items-center px-5">
@@ -193,11 +180,9 @@
             </div>
           </div>
           <div class="mt-3 px-2 space-y-1">
-            <DisclosureButton
-              v-for="item in userNavigation"
-              :key="item.name"
-              as="a"
-              :href="item.href"
+            <Link
+              href="/users"
+              as="button"
               class="
                 block
                 px-3
@@ -209,8 +194,25 @@
                 hover:text-white hover:bg-gray-700
               "
             >
-              {{ item.name }}
-            </DisclosureButton>
+              <DisclosureButton> Profile </DisclosureButton>
+            </Link>
+            <Link
+              href="/logout"
+              method="post"
+              as="button"
+              class="
+                block
+                px-3
+                py-2
+                rounded-md
+                text-base
+                font-medium
+                text-gray-400
+                hover:text-white hover:bg-gray-700
+              "
+            >
+              <DisclosureButton> Logout </DisclosureButton>
+            </Link>
           </div>
         </div>
       </DisclosurePanel>
@@ -225,7 +227,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import {
   Disclosure,
   DisclosureButton,
@@ -238,6 +240,8 @@ import {
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
 import FlashMessages from '../Common/FlashMessages.vue'
 import { usePage } from '@inertiajs/inertia-vue3'
+import { ref, defineComponent } from 'vue'
+import { IAuthUser } from '../../@types/user'
 
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
@@ -248,7 +252,7 @@ const navigation = [
 ]
 const userNavigation = [{ name: 'Your Profile', href: '/users' }]
 
-export default {
+export default defineComponent({
   components: {
     Disclosure,
     DisclosureButton,
@@ -263,16 +267,18 @@ export default {
     FlashMessages,
   },
   setup() {
-    const user = usePage().props.value.auth.user
+    const current = ref(true)
+    const user = usePage<IAuthUser>().props.value.auth.user
 
     const profileImg = user.profile_img ?? user.avatar
 
     return {
       user,
+      current,
       profileImg,
       navigation,
       userNavigation,
     }
   },
-}
+})
 </script>

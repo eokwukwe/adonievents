@@ -1,9 +1,9 @@
 <template>
   <Head title="Login" />
 
-  <div class="p-6 min-h-screen flex flex-col justify-center items-center">
+  <div class="p-1.5 min-h-screen flex flex-col justify-center items-center">
     <div class="w-full sm:max-w-md"><flash-messages /></div>
-    <div class="w-full px-6 pb-8 pt-4 bg-white shadow-md rounded-lg overflow-hidden sm:max-w-md">
+    <div class="w-full px-3 pb-8 pt-4 bg-white shadow-md rounded-lg overflow-hidden sm:max-w-md sm:px-6">
       <div class="mb-4 text-3xl text-indigo-800">Welcome Back!</div>
 
       <form @submit.prevent="submitForm">

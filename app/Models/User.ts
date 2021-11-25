@@ -54,7 +54,7 @@ export default class User extends BaseModel {
 
   @computed()
   public get avatar() {
-    return `https://ui-avatars.com/api/?name=${this.firstName}+${this.lastName}&background=eee`
+    return `https://ui-avatars.com/api/?name=${this.firstName}+${this.lastName}&background=eee&color=3730a3`
   }
 
   public async sendVerificationEmail() {
