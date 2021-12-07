@@ -3,7 +3,19 @@
 
   <div class="p-1.5 min-h-screen flex flex-col justify-center items-center">
     <div class="w-full sm:max-w-md"><flash-messages /></div>
-    <div class="w-full px-3 pb-8 pt-4 bg-white shadow-md rounded-lg overflow-hidden sm:max-w-md sm:px-6">
+    <div
+      class="
+        w-full
+        px-3
+        pb-8
+        pt-4
+        bg-white
+        shadow-md
+        rounded-lg
+        overflow-hidden
+        sm:max-w-md sm:px-6
+      "
+    >
       <div class="mb-4 text-3xl text-indigo-800">Welcome Back!</div>
 
       <form @submit.prevent="submitForm">
@@ -39,22 +51,20 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script>
 import { useForm } from '@inertiajs/inertia-vue3'
 
-import { IUserLogin } from '../../@types/user'
 import FormInput from '../../Components/Form/FormInput.vue'
 import LoadingButton from '../../Components/Button/LoadingButton.vue'
 import FlashMessages from '../../Components/Common/FlashMessages.vue'
 
-export default defineComponent({
+export default {
   name: 'LoginPage',
 
   components: { FormInput, LoadingButton, FlashMessages },
 
   setup() {
-    const form = useForm<IUserLogin>({
+    const form = useForm({
       email: '',
       password: '',
     })
@@ -71,5 +81,5 @@ export default defineComponent({
 
     return { form, submitForm }
   },
-})
+}
 </script>

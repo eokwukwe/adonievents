@@ -29,21 +29,20 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script>
 import { useForm } from '@inertiajs/inertia-vue3'
 
 import FormInput from '../../Components/Form/FormInput.vue'
 import LoadingButton from '../../Components/Button/LoadingButton.vue'
 import FlashMessages from '../../Components/Common/FlashMessages.vue'
 
-export default defineComponent({
+export default {
   name: 'VerificationLinkPage',
 
   components: { FormInput, LoadingButton, FlashMessages },
 
   setup() {
-    const form = useForm<{ email: string }>({
+    const form = useForm({
       email: '',
     })
 
@@ -52,7 +51,7 @@ export default defineComponent({
 
       form.post('/verification-link', {
         onError: () => {
-          let errObj: Record<string, string> = {}
+          let errObj = {}
 
           for (const [key, value] of Object.entries(form.errors)) {
             errObj[key] = value[0]
@@ -68,5 +67,5 @@ export default defineComponent({
 
     return { form, submitForm }
   },
-})
+}
 </script>

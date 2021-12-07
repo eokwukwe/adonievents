@@ -19,12 +19,8 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
-import CloudinaryServices from 'App/Services/CloudinaryServices'
-// import cloudinary from '@ioc:Cloudinary'
 
 Route.get('/', async ({ inertia }) => {
-  // await cloudinary.v2.uploader.upload('https://picsum.photos/id/237/200/300')
-  await CloudinaryServices.cloudinary().uploader.upload('https://picsum.photos/id/237/200/300')
   return inertia.render('Welcome')
 })
   .as('welcome')
@@ -35,7 +31,9 @@ Route.group(() => {
     .as('user.index')
     .namespace('App/Controllers/Http/Users')
 
-  Route.post('logout', 'LoginController.destroy').namespace('App/Controllers/Http/Auth')
+  Route.post('logout', 'LoginController.destroy')
+    .as('logout')
+    .namespace('App/Controllers/Http/Auth')
 }).middleware('auth')
 
 Route.group(() => {
@@ -48,6 +46,7 @@ Route.group(() => {
   Route.get('verify-email/:email', 'EmailVerificationController.verify').as('verifyEmail')
 
   Route.get('verification-link', 'EmailVerificationController.show').as('verification.show')
+
   Route.post('verification-link', 'EmailVerificationController.send')
 })
   .middleware('guest')

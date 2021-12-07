@@ -172,16 +172,15 @@
   </div>
 </template>
 
-<script lang="ts">
-import { ref, defineComponent } from 'vue'
+<script>
+import { ref } from 'vue'
 import { usePage } from '@inertiajs/inertia-vue3'
 import AuthenticatedLayout from '../../Components/Layouts/Authenticated.vue'
 import AccordionComponent from '../../Components/Common/Accordion.vue'
 
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
-import { IAuthUser } from '../../@types/user'
 
-export default defineComponent({
+export default {
   name: 'UserDashboard',
   layout: AuthenticatedLayout,
 
@@ -195,7 +194,7 @@ export default defineComponent({
   },
 
   setup() {
-    const user = usePage<IAuthUser>().props.value.auth.user
+    const user = usePage().props.value.auth.user
 
     const profileImg = user.profile_img ?? user.avatar
 
@@ -256,7 +255,7 @@ export default defineComponent({
       categories,
     }
   },
-})
+}
 </script>
 
 <style></style>

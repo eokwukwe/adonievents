@@ -46,7 +46,7 @@ Encore.setPublicPath('/assets')
 | entrypoints.
 |
 */
-Encore.addEntry('app', './resources/js/app.ts')
+Encore.addEntry('app', './resources/js/app.js')
 
 /*
 |--------------------------------------------------------------------------
@@ -192,7 +192,7 @@ Encore.enableVueLoader(() => {}, {
   useJsx: false,
 })
 
-Encore.enableTypeScriptLoader()
+// Encore.enableTypeScriptLoader()
 
 Encore.addAliases({
   '@': resolve(__dirname, './resources/js'),

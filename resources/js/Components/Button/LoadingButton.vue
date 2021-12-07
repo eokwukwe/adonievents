@@ -4,12 +4,11 @@
     <slot />
   </button>
 </template>
-<script lang="ts">
-import { defineComponent } from 'vue'
 
-export default defineComponent({
+<script>
+export default {
   props: {
     loading: Boolean,
   },
-})
+}
 </script>

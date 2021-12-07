@@ -8,10 +8,8 @@
   </details>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({})
+<script>
+export default {}
 </script>
 
 <style></style>

@@ -227,7 +227,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import {
   Disclosure,
   DisclosureButton,
@@ -240,8 +240,7 @@ import {
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
 import FlashMessages from '../Common/FlashMessages.vue'
 import { usePage } from '@inertiajs/inertia-vue3'
-import { ref, defineComponent } from 'vue'
-import { IAuthUser } from '../../@types/user'
+import { ref } from 'vue'
 
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
@@ -252,7 +251,7 @@ const navigation = [
 ]
 const userNavigation = [{ name: 'Your Profile', href: '/users' }]
 
-export default defineComponent({
+export default {
   components: {
     Disclosure,
     DisclosureButton,
@@ -268,7 +267,7 @@ export default defineComponent({
   },
   setup() {
     const current = ref(true)
-    const user = usePage<IAuthUser>().props.value.auth.user
+    const user = usePage().props.value.auth.user
 
     const profileImg = user.profile_img ?? user.avatar
 
@@ -280,5 +279,5 @@ export default defineComponent({
       userNavigation,
     }
   },
-})
+}
 </script>

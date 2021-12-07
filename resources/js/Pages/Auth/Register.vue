@@ -3,7 +3,19 @@
 
   <div class="p-1.5 min-h-screen flex flex-col justify-center items-center">
     <flash-messages />
-    <div class="w-full px-3 pb-8 pt-4 bg-white shadow-md rounded-lg overflow-hidden sm:max-w-md sm:px-6">
+    <div
+      class="
+        w-full
+        px-3
+        pb-8
+        pt-4
+        bg-white
+        shadow-md
+        rounded-lg
+        overflow-hidden
+        sm:max-w-md sm:px-6
+      "
+    >
       <div class="mb-4 text-3xl text-indigo-800">Register</div>
 
       <form @submit.prevent="submitForm">
@@ -49,7 +61,7 @@
         </div>
 
         <div class="flex mt-4">
-          <Link  href="/login" class="underline text-blue-400">Login</Link>
+          <Link href="/login" class="underline text-blue-400">Login</Link>
           <loading-button :loading="form.processing" class="ml-auto btn-indigo" type="submit">
             Register
           </loading-button>
@@ -59,22 +71,20 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script>
 import { useForm } from '@inertiajs/inertia-vue3'
 
-import { IUserRegister } from '../../@types/user'
 import FormInput from '../../Components/Form/FormInput.vue'
 import LoadingButton from '../../Components/Button/LoadingButton.vue'
 import FlashMessages from '../../Components/Common/FlashMessages.vue'
 
-export default defineComponent({
+export default {
   name: 'RegisterPage',
 
   components: { FormInput, LoadingButton, FlashMessages },
 
   setup() {
-    const form = useForm<IUserRegister>({
+    const form = useForm({
       firstName: '',
       lastName: '',
       email: '',
@@ -86,7 +96,7 @@ export default defineComponent({
 
       form.post('/register', {
         onError: () => {
-          let errObj: Record<string, string> = {}
+          let errObj = {}
 
           for (const [key, value] of Object.entries(form.errors)) {
             errObj[key] = value[0]
@@ -102,5 +112,5 @@ export default defineComponent({
 
     return { form, submitForm }
   },
-})
+}
 </script>

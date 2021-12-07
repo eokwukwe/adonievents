@@ -1,5 +1,5 @@
 <template>
-    <flash-messages />
+  <flash-messages />
   <div class="h-screen flex flex-col items-center justify-center">
     <div>
       <h1 class="text-2xl md:text-7xl capitalize text-gray-600 font-semibold">
@@ -12,12 +12,12 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script>
 import FlashMessages from '../Components/Common/FlashMessages.vue'
 
-export default defineComponent({
-  components: { FlashMessages },})
+export default {
+  components: { FlashMessages },
+}
 </script>
 
 <style></style>
