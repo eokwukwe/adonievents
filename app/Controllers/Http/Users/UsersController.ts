@@ -1,8 +1,12 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
+import User from 'App/Models/User'
+
 export default class UsersController {
-  public async index({ inertia }: HttpContextContract) {
-    return inertia.render('Users/Index')
+  public async index({ inertia, params }: HttpContextContract) {
+    const user = await User.findByOrFail('id', params.id)
+
+    return inertia.render('Users/Index', { user })
   }
 
   public async create({}: HttpContextContract) {}

@@ -9,7 +9,7 @@ export default class EmailVerificationController {
       const user = await User.findByOrFail('email', params.email)
 
       if (await user.emailIsVerified()) {
-        session.flash('success', 'THis email is already verified. Please log in.')
+        session.flash('success', 'This email is already verified. Please log in.')
 
         return response.redirect().toRoute('LoginController.create')
       }

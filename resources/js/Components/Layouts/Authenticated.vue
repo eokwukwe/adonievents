@@ -87,7 +87,7 @@
                     <MenuItem>
                       <Link
                         as="button"
-                        href="/users"
+                        :href="`/users/${authUser.id}`"
                         class="
                           w-full
                           block
@@ -171,17 +171,17 @@
             </div>
             <div class="ml-3">
               <div class="text-base font-medium leading-none text-white">
-                {{ user.first_name }}
-                {{ user.last_name }}
+                {{ authUser.first_name }}
+                {{ authUser.last_name }}
               </div>
               <div class="text-sm font-medium leading-none text-gray-400 mt-1">
-                {{ user.email }}
+                {{ authUser.email }}
               </div>
             </div>
           </div>
           <div class="mt-3 px-2 space-y-1">
             <Link
-              href="/users"
+              :href="`/users/${authUser.id}`"
               as="button"
               class="
                 block
@@ -267,12 +267,12 @@ export default {
   },
   setup() {
     const current = ref(true)
-    const user = usePage().props.value.auth.user
+    const authUser = usePage().props.value.auth.user
 
-    const profileImg = user.profile_img ?? user.avatar
+    const profileImg = authUser.profile_img ?? authUser.avatar
 
     return {
-      user,
+      authUser,
       current,
       profileImg,
       navigation,

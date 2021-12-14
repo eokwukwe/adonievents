@@ -6,15 +6,15 @@
         <div class="grid grid-cols-3 text-center order-last md:order-first mt-6 md:mt-0">
           <div>
             <p class="font-bold text-gray-700 text-base">22</p>
-            <p class="text-gray-400 text-sm">Friends</p>
+            <p class="text-gray-400 text-sm">Followers</p>
           </div>
           <div>
             <p class="font-bold text-gray-700 text-base">10</p>
-            <p class="text-gray-400 text-sm">Photos</p>
+            <p class="text-gray-400 text-sm">Followings</p>
           </div>
           <div>
             <p class="font-bold text-gray-700 text-base">89</p>
-            <p class="text-gray-400 text-sm">Comments</p>
+            <p class="text-gray-400 text-sm">Events</p>
           </div>
         </div>
 
@@ -41,7 +41,7 @@
           >
             <img
               class="w-24 h-24 md:w-48 md:h-48 rounded-full"
-              :src="profileImg"
+              :src="userWhosProfileIsViewedImg"
               alt="profile image"
             />
           </div>
@@ -102,9 +102,10 @@
       <template #title>Bio</template>
 
       <p class="font-light text-gray-500">
-        An artist of considerable range, Ryan the name taken by Melbourne-raised, Brooklyn-based
-        Nick Murphy writes, performs and records all of his own music, giving it a warm, intimate
-        feel with a solid groove structure. An artist of considerable range.
+        An artist of considerable range, Ryan the name taken by Melbourne-raised,
+        Brooklyn-based Nick Murphy writes, performs and records all of his own music,
+        giving it a warm, intimate feel with a solid groove structure. An artist of
+        considerable range.
       </p>
     </accordion-component>
 
@@ -120,9 +121,7 @@
             :class="[
               'w-full py-2.5 text-sm leading-5 font-medium',
               'focus:outline-none',
-              selected
-                ? 'bg-indigo-800 text-white'
-                : 'text-gray-700 hover:bg-indigo-200 hover:text-white',
+              selected ? 'bg-indigo-800 text-white' : 'text-gray-700 hover:bg-gray-200',
             ]"
           >
             {{ category }}
@@ -149,7 +148,17 @@
                 {{ post.title }}
               </h3>
 
-              <ul class="flex mt-1 space-x-1 text-xs font-normal leading-4 text-coolGray-500">
+              <ul
+                class="
+                  flex
+                  mt-1
+                  space-x-1
+                  text-xs
+                  font-normal
+                  leading-4
+                  text-coolGray-500
+                "
+              >
                 <li>{{ post.date }}</li>
                 <li>&middot;</li>
                 <li>{{ post.commentCount }} comments</li>
@@ -193,10 +202,15 @@ export default {
     TabPanel,
   },
 
-  setup() {
-    const user = usePage().props.value.auth.user
+  props: {
+    user: Object,
+  },
 
-    const profileImg = user.profile_img ?? user.avatar
+  setup(props) {
+    const authUser = usePage().props.value.auth.user
+    const authUserProfileImg = authUser.profile_img ?? authUser.avatar
+
+    const userWhosProfileIsViewedImg = props.user.profile_img ?? props.user.avatar
 
     let categories = ref({
       'Update Profile': [
@@ -231,7 +245,7 @@ export default {
           shareCount: 12,
         },
       ],
-      Followers: [
+      'Followers': [
         {
           id: 1,
           title: 'Ask Me Anything: 10 answers to your questions about coffee',
@@ -250,9 +264,10 @@ export default {
     })
 
     return {
-      user,
-      profileImg,
+      authUser,
       categories,
+      authUserProfileImg,
+      userWhosProfileIsViewedImg
     }
   },
 }

@@ -31,7 +31,7 @@ export default class LoginController {
 
     await auth.use('web').login(user)
 
-    response.redirect().toRoute('UsersController.index')
+    response.redirect().toRoute('UsersController.index', { id: user.id })
   }
 
   /**

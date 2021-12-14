@@ -27,7 +27,7 @@ Route.get('/', async ({ inertia }) => {
   .middleware('guest')
 
 Route.group(() => {
-  Route.get('users', 'UsersController.index')
+  Route.get('users/:id', 'UsersController.index')
     .as('user.index')
     .namespace('App/Controllers/Http/Users')
 
@@ -45,7 +45,9 @@ Route.group(() => {
 
   Route.get('verify-email/:email', 'EmailVerificationController.verify').as('verifyEmail')
 
-  Route.get('verification-link', 'EmailVerificationController.show').as('verification.show')
+  Route.get('verification-link', 'EmailVerificationController.show').as(
+    'verification.show'
+  )
 
   Route.post('verification-link', 'EmailVerificationController.send')
 })
