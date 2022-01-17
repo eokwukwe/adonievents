@@ -92,9 +92,9 @@
 
       <div class="mt-2 md:mt-20 text-center pb-2">
         <h1 class="text-3xl font-medium text-gray-700 capitalize">
-          {{ user.first_name }} {{ user.last_name }}
+          {{ user.firstName }} {{ user.lastName }}
         </h1>
-        <p class="font-light text-gray-600">090912344566 - {{ user.email }}</p>
+        <p class="font-light text-gray-600"> {{user.phone}} {{ user.email }}</p>
       </div>
     </div>
 
@@ -207,10 +207,11 @@ export default {
   },
 
   setup(props) {
+    console.log({user: props.user})
     const authUser = usePage().props.value.auth.user
-    const authUserProfileImg = authUser.profile_img ?? authUser.avatar
+    const authUserProfileImg = authUser.profileImg ?? authUser.avatar
 
-    const userWhosProfileIsViewedImg = props.user.profile_img ?? props.user.avatar
+    const userWhosProfileIsViewedImg = props.user.profileImg ?? props.user.avatar
 
     let categories = ref({
       'Update Profile': [

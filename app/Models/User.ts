@@ -3,7 +3,8 @@ import Env from '@ioc:Adonis/Core/Env'
 import Hash from '@ioc:Adonis/Core/Hash'
 import Mail from '@ioc:Adonis/Addons/Mail'
 import Route from '@ioc:Adonis/Core/Route'
-import { BaseModel, beforeSave, column, computed } from '@ioc:Adonis/Lucid/Orm'
+import { beforeSave, column, computed } from '@ioc:Adonis/Lucid/Orm'
+import BaseModel from './BaseModel'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -34,7 +35,7 @@ export default class User extends BaseModel {
   public rememberMeToken?: string
 
   @column.dateTime({ serializeAs: null })
-  public email_verified_at: DateTime
+  public emailVerifiedAt: DateTime
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -73,11 +74,11 @@ export default class User extends BaseModel {
   }
 
   public async markEmailAsVerified() {
-    this.email_verified_at = DateTime.local()
+    this.emailVerifiedAt = DateTime.local()
     this.save()
   }
 
   public async emailIsVerified() {
-    return !!this.email_verified_at
+    return !!this.emailVerifiedAt
   }
 }
