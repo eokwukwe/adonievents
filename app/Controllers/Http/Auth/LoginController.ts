@@ -8,10 +8,13 @@ export default class LoginController {
     return inertia.render('Auth/Login')
   }
 
+  /**
+   * Log user in
+   */
   public async store({ request, response, auth, session }: HttpContextContract) {
     const user = await User.findBy('email', request.input('email'))
 
-    if (!user) {
+    if (!user || !(await Hash.verify(user.password, request.input('password')))) {
       session.flash('error', 'Invalid credentials')
       return response.redirect().back()
     }
@@ -21,11 +24,6 @@ export default class LoginController {
         'error',
         "You've not verified your email. Use the link that was sent to mail or request another one."
       )
-      return response.redirect().back()
-    }
-
-    if (!(await Hash.verify(user.password, request.input('password')))) {
-      session.flash('error', 'Invalid credentials')
       return response.redirect().back()
     }
 
