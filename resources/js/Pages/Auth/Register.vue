@@ -2,17 +2,7 @@
   <Head title="Register" />
 
   <div
-    class="
-      w-full
-      px-3
-      pb-8
-      pt-4
-      bg-white
-      shadow-md
-      rounded-lg
-      overflow-hidden
-      sm:max-w-md sm:px-6
-    "
+    class="w-full px-3 pb-8 pt-4 bg-white shadow-md rounded-lg overflow-hidden sm:max-w-md sm:px-6"
   >
     <div class="mb-4 text-3xl text-indigo-800">Register</div>
 

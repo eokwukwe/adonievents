@@ -23,7 +23,10 @@ export default class Register {
 
     await user.sendVerificationEmail()
 
-    session.flash('success', 'Registration successfull. Check your mail to verify your email')
+    session.flash(
+      'success',
+      'Registration successfull. Check your mail to verify your email'
+    )
 
     response.redirect().back()
   }

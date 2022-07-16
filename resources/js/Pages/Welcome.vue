@@ -1,3 +1,7 @@
+<script setup>
+import FlashMessages from '../Components/Common/FlashMessages.vue'
+</script>
+
 <template>
   <flash-messages />
   <div class="h-screen flex flex-col items-center justify-center">
@@ -11,13 +15,5 @@
     </div>
   </div>
 </template>
-
-<script>
-import FlashMessages from '../Components/Common/FlashMessages.vue'
-
-export default {
-  components: { FlashMessages },
-}
-</script>
 
 <style></style>
